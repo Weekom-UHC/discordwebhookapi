@@ -8,6 +8,7 @@ use libasynCurl\Curl;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\InternetRequestResult;
+use SOFe\AwaitGenerator\Await;
 
 final class DiscordWebhookAPI {
 
@@ -29,6 +30,10 @@ final class DiscordWebhookAPI {
 		return new self($url, $message);
 	}
 
+	public static function isRegistered() : bool {
+		return self::$registered !== null;
+	}
+
 	public static function register(PluginBase $plugin) : void {
 		if (self::$registered !== null) {
 			throw new \RuntimeException('Library already registered. (classname=' . self::$registered::class . ')');
@@ -46,11 +51,18 @@ final class DiscordWebhookAPI {
 				'Content-Type: application/json',
 			],
 			closure: static function (?InternetRequestResult $result) : void {
-				if ($result !== null) {
-					if ($result->getCode() === 200 || $result->getCode() === 204) return;
-					Server::getInstance()->getLogger()->info('DiscordWebhookAPI Error Code ' . $result->getCode() . '. (body=' . $result->getBody() . ' | headers=' . implode(', ', $result->getHeaders()) . ')');
-				}
+				$code = $result?->getCode() ?? -1;
+				$body = $result?->getBody() ?? '';
+				$headers = $result?->getHeaders() ?? [];
+
+				if ($code === -1 || $code === 200 || $code === 204) return;
+				Server::getInstance()->getLogger()->info('DiscordWebhookAPI Error Code ' . $result->getCode() . '. (body=' . $result->getBody() . ')');
 			}
 		);
+	}
+
+	public function sendAsync() : \Generator {
+		$this->send();
+		return yield Await::ONCE;
 	}
 }
