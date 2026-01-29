@@ -10,18 +10,11 @@
       "email": "reacherurmom@gmail.com"
     }
   ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/NetherGamesMC/libasynCurl"
-    }
-  ],
   "require-dev": {
     "php": "^8.2",
     "pocketmine/pocketmine-mp": "^5.39.3"
   },
   "require": {
-    "nethergamesmc/libasyncurl": "dev-pm5",
     "sof3/await-generator": ">=3.6.1"
   },
   "extra": {
