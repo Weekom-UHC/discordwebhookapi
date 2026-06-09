@@ -8,7 +8,6 @@ use libasynCurl\Curl;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\InternetRequestResult;
-use SOFe\AwaitGenerator\Await;
 
 final class DiscordWebhookAPI {
 
@@ -55,14 +54,9 @@ final class DiscordWebhookAPI {
 				$body = $result?->getBody() ?? '';
 				$headers = $result?->getHeaders() ?? [];
 
-				if ($code === -1 || $code === 200 || $code === 204) return;
-				Server::getInstance()->getLogger()->info('DiscordWebhookAPI Error Code ' . $result->getCode() . '. (body=' . $result->getBody() . ')');
+				if ($code === 200 || $code === 204) return;
+				Server::getInstance()->getLogger()->info('DiscordWebhookAPI Error Code ' . $code . '. (body=' . $body . ')');
 			}
 		);
-	}
-
-	public function sendAsync() : \Generator {
-		$this->send();
-		return yield Await::ONCE;
 	}
 }
