@@ -10,13 +10,13 @@
       "email": "reacherurmom@gmail.com"
     }
   ],
-  "repositories": [{"url": "https://github.com/hcf-project/libasynCurl.git", "type": "vcs"}],
+  "repositories": [{"url": "https://github.com/greek-mc/libasynCurl.git", "type": "vcs"}],
   "require-dev": {
     "php": "^8.4",
     "pocketmine/pocketmine-mp": "^5.39.3"
   },
   "require": {
-    "hcf-project/libasyncurl": "dev-master"
+    "greek-mc/libasyncurl": "dev-master"
   },
   "extra": {
     "virion": {
